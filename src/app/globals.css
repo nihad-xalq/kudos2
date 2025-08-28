@@ -1,26 +1,66 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.willFadeIn {
+    animation: fadeIn 0.5s ease-in-out;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Custom Swiper Styles */
+.sponsors-swiper .swiper-button-next,
+.sponsors-swiper .swiper-button-prev {
+    color: #10b981;
+    /* emerald-500 */
+    background: rgba(16, 185, 129, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.sponsors-swiper .swiper-button-next:hover,
+.sponsors-swiper .swiper-button-prev:hover {
+    background: rgba(16, 185, 129, 0.2);
+    transform: scale(1.1);
+}
+
+.sponsors-swiper .swiper-button-next::after,
+.sponsors-swiper .swiper-button-prev::after {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.sponsors-swiper .swiper-pagination-bullet {
+    background: #10b981;
+    /* emerald-500 */
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.sponsors-swiper .swiper-pagination-bullet-active {
+    opacity: 1;
+    background: #10b981;
+    /* emerald-500 */
+    transform: scale(1.2);
+}
+
+/* Ensure smooth transitions */
+.sponsors-swiper .swiper-slide {
+    transition: transform 0.3s ease;
+}
+
+.sponsors-swiper .swiper-slide:hover {
+    transform: translateY(-5px);
 }
