@@ -63,6 +63,11 @@ export default function Notification({
     const config = notificationConfig[type];
     const Icon = config.icon;
 
+    const handleClose = () => {
+        setIsClosing(true);
+        onClose?.();
+    };
+
     useEffect(() => {
         if (!isVisible) return;
 
@@ -90,14 +95,9 @@ export default function Notification({
             clearTimeout(timer);
             clearInterval(progressInterval);
         };
-    }, [isVisible, duration]);
+    }, [isVisible, duration, handleClose]);
 
-    const handleClose = () => {
-        setIsClosing(true);
-        setTimeout(() => {
-            onClose?.();
-        }, 300); // Match the transition duration
-    };
+
 
     if (!isVisible && !isClosing) return null;
 
@@ -159,6 +159,7 @@ export function useNotification() {
         type: NotificationType;
         title: string;
         message: string;
+        duration?: number;
         isVisible: boolean;
     } | null>(null);
 
@@ -172,6 +173,7 @@ export function useNotification() {
             type,
             title,
             message,
+            duration,
             isVisible: true
         });
     };

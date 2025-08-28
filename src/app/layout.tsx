@@ -1,5 +1,6 @@
-import { Poppins } from "next/font/google";
+import Header from "@/components/semantic/Header";
 import Footer from "@/components/semantic/Footer";
+import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
 // Import Swiper styles
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
+        <Header />
         {children}
         <Footer />
       </body>
