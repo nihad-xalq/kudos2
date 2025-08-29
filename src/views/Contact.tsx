@@ -1,6 +1,104 @@
+"use client"
+
+import { InputTextareaField } from "@/components/form/inputs/InputTextareaField";
+import { InputSelectField } from "@/components/form/inputs/InputSelectField";
+import { InputTextField } from "@/components/form/inputs/InputTextField";
+import { useNotification } from "@/components/reusable/Notification";
+import { CFormProvider } from "@/components/form/CFormProvider";
+import Notification from "@/components/reusable/Notification";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
+import Link from "next/link";
+
+const contactInfo = [
+  {
+    id: 1,
+    title: "Email Us",
+    description: "We'll respond within 24 hours",
+    icon: <MdEmail />,
+    link: "mailto:info@example.com",
+    text: "info@example.com",
+    bgColor: "bg-blue-500/20",
+  },
+  {
+    id: 2,
+    title: "Call Us",
+    description: "Mon-Fri from 8am to 6pm",
+    icon: <MdPhone />,
+    link: "tel:+15551234567",
+    text: "+1 (555) 123-4567",
+    bgColor: "bg-green-500/20",
+  },
+  {
+    id: 3,
+    title: "Visit Us",
+    description: "Come say hello at our office",
+    icon: <MdLocationOn />,
+    link: "https://www.google.com/maps/place/Safrani+Baku/@40.3919942,49.8485243,15z/data=!4m5!3m4!1s0x40307d00164bf987:0xf627c02295b999f6!8m2!3d40.3919942!4d49.8485243",
+    text: "123 Main Street, City, State 12345",
+    bgColor: "bg-red-500/20",
+  },
+];
+
+const schema = yup.object().shape({
+  firstName: yup.string().required('First name is required'),
+  lastName: yup.string().required('Last name is required'),
+  email: yup.string().email('Invalid email address').required('Email is required'),
+  phone: yup.string().required('Phone is required'),
+  subject: yup.string().required('Subject is required'),
+  newsletter: yup.boolean().required('Newsletter is required'),
+});
+
+type FormValues = yup.InferType<typeof schema>;
+
 const Contact: React.FC = () => {
+  const { notification, showNotification, hideNotification } = useNotification();
+
+  const methods = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      subject: '',
+      newsletter: false,
+    },
+  });
+
+  const handleSubmit = (data: FormValues) => {
+    console.log('Form submitted with data:', data);
+    showNotification('success', 'Success', 'Form submitted successfully');
+
+    // Clear the form
+    methods.reset();
+
+    // Close notification after 3 seconds
+    setTimeout(() => {
+      hideNotification();
+    }, 3000);
+  };
+
+  // const handleSubmitError = (errors: unknown) => {
+  //   console.log('Form validation errors:', errors);
+  //   showNotification('error', 'Error', 'Please fix the form errors');
+  // };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+      {/* Notification Component */}
+      {notification && (
+        <Notification
+          type={notification.type}
+          title={notification.title}
+          message={notification.message}
+          duration={notification.duration}
+          isVisible={notification.isVisible}
+          onClose={hideNotification}
+        />
+      )}
       {/* Hero Section */}
       <section className="relative bg-black text-white py-20">
         <div className="absolute inset-0 bg-black opacity-20"></div>
@@ -19,48 +117,25 @@ const Contact: React.FC = () => {
       {/* Contact Information Cards */}
       <section className="py-16 bg-white">
         <div className="mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 mx-auto">
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-xl text-center hover:shadow-lg transition-shadow duration-300">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Email Us</h3>
-              <p className="text-gray-600 mb-4">We&apos;ll respond within 24 hours</p>
-              <a href="mailto:info@example.com" className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
-                info@example.com
-              </a>
-            </div>
-
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-xl text-center hover:shadow-lg transition-shadow duration-300">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Call Us</h3>
-              <p className="text-gray-600 mb-4">Mon-Fri from 8am to 6pm</p>
-              <a href="tel:+15551234567" className="text-green-600 font-medium hover:text-green-700 transition-colors">
-                +1 (555) 123-4567
-              </a>
-            </div>
-
-            <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-xl text-center hover:shadow-lg transition-shadow duration-300">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Visit Us</h3>
-              <p className="text-gray-600 mb-4">Come say hello at our office</p>
-              <p className="text-purple-600 font-medium">
-                123 Main Street<br />
-                City, State 12345
-              </p>
-            </div>
-          </div>
+          <ul className="grid md:grid-cols-3 gap-8 mx-auto">
+            {contactInfo.map((info) => (
+              <li key={info.id} className={`p-8 rounded-xl text-center hover:shadow-lg transition-shadow duration-300 ${info.bgColor}`}>
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  {info.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{info.title}</h3>
+                <p className="text-gray-600 mb-4">{info.description}</p>
+                <Link
+                  href={info.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 font-medium hover:text-blue-700 transition-colors"
+                >
+                  {info.text}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -73,123 +148,76 @@ const Contact: React.FC = () => {
                 Send Us a Message
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Fill out the form below and we&apos;ll get back to you as soon as possible
+                Fill out the form below and w&apos;ll get back to you as soon as possible
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-              <form className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="firstName" className="block text-sm font-semibold text-gray-700 mb-2">
-                      First Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                      placeholder="Enter your first name"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="lastName" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Last Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                      placeholder="Enter your last name"
-                    />
-                  </div>
+            <div className="bg-white rounded-2xl shadow-xl p-4 md:p-12 max-w-4xl mx-auto">
+              <CFormProvider
+                onSubmit={handleSubmit}
+                methods={methods}
+                className="space-y-8"
+              >
+                {/* Personal Information */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <InputTextField name="firstName" label="First name" placeholder="Elgün" />
+                  <InputTextField name="lastName" label="Last name" placeholder="Abdurrahmanov" />
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                      placeholder="Enter your email address"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                      placeholder="Enter your phone number"
-                    />
-                  </div>
+                {/* Contact Information */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <InputTextField name="email" label="Email" placeholder="elgun@example.com" />
+                  <InputTextField name="phone" label="Phone" placeholder="055 123 45 67" />
                 </div>
 
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Subject *
-                  </label>
-                  <select
-                    id="subject"
+                {/* Subject Selection */}
+                <div className="w-full">
+                  <InputSelectField
                     name="subject"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                  >
-                    <option value="">Select a subject</option>
-                    <option value="general">General Inquiry</option>
-                    <option value="partnership">Partnership Opportunity</option>
-                    <option value="volunteer">Volunteer Information</option>
-                    <option value="donation">Donation Question</option>
-                    <option value="other">Other</option>
-                  </select>
+                    label="Subject"
+                    placeholder="Select a subject"
+                    defaultOptions={[
+                      { id: 1, name: "General Inquiry" },
+                      { id: 2, name: "Partnership Opportunity" },
+                      { id: 3, name: "Volunteer Information" },
+                      { id: 4, name: "Donation Question" },
+                      { id: 5, name: "Other" },
+                    ]}
+                  />
                 </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
-                    Message *
-                  </label>
-                  <textarea
-                    id="message"
+                {/* Message */}
+                <div className="w-full">
+                  <InputTextareaField
                     name="message"
-                    rows={6}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                    label="Message"
                     placeholder="Tell us how we can help you..."
-                  ></textarea>
+                  />
                 </div>
 
-                <div className="flex items-start">
+                {/* Newsletter Subscription */}
+                <div className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg">
                   <input
                     type="checkbox"
                     id="newsletter"
-                    name="newsletter"
-                    className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    {...methods.register('newsletter')}
+                    className="mt-1 h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
                   />
-                  <label htmlFor="newsletter" className="ml-2 text-sm text-gray-600">
+                  <label htmlFor="newsletter" className="text-sm text-gray-700 leading-relaxed">
                     I would like to receive updates about your organization and upcoming events
                   </label>
                 </div>
 
-                <div className="text-center">
+                {/* Submit Button */}
+                <div className="flex justify-center pt-4">
                   <button
                     type="submit"
-                    className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 px-8 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105"
+                    className="w-full md:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-lg px-8 py-4 rounded-full border-2 border-emerald-600 transition-all duration-300 cursor-pointer transform hover:scale-105 hover:shadow-lg min-w-[200px]"
                   >
                     Send Message
                   </button>
                 </div>
-              </form>
+              </CFormProvider>
             </div>
           </div>
         </div>

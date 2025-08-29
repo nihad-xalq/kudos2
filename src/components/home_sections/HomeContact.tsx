@@ -1,8 +1,8 @@
 import { InputTextField } from "../form/inputs/InputTextField";
 import { useNotification } from "../reusable/Notification";
-import Notification from "../reusable/Notification";
 import { CFormProvider } from "../form/CFormProvider";
 import { yupResolver } from '@hookform/resolvers/yup';
+import Notification from "../reusable/Notification";
 import SectionTitle from "../reusable/SectionTitle";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -15,7 +15,6 @@ const schema = yup.object().shape({
 });
 
 type FormValues = yup.InferType<typeof schema>;
-
 
 export default function HomeContact() {
     const { notification, showNotification, hideNotification } = useNotification();
@@ -35,7 +34,7 @@ export default function HomeContact() {
             <SectionTitle title="Contact US" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
-                <div className="flex flex-col items-center justify-center gap-10 w-5/6">
+                <div className="flex flex-col items-center justify-center gap-10 w-full md:w-5/6">
                     <CFormProvider onSubmit={handleSubmit} methods={methods} className="space-y-4">
                         <InputTextField name="fullname" label="Full name" placeholder="Elgün Abdurrahmanov" />
                         <InputTextField name="mobile_number" label="Mobile number" placeholder="055 123 45 67" />
@@ -49,7 +48,7 @@ export default function HomeContact() {
                         </button>
                     </CFormProvider>
                 </div>
-                <div className="text-[100px] font-bold flex items-center justify-center">
+                <div className="text-[80px] md:text-[100px] font-bold flex items-center justify-center">
                     <span className="-translate-y-10">KUDOS</span>
                 </div>
             </div>

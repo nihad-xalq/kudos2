@@ -133,7 +133,7 @@ const Results: React.FC = () => {
       {/* Statistics Section */}
       <section className="py-16 bg-white">
         <div className="mx-auto px-4">
-          <ul className="grid grid-cols-2 md:grid-cols-4 gap-8 mx-auto">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mx-auto">
             {
               stats.map((stat) => (
                 <li key={stat.id} className="text-center p-4 bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">

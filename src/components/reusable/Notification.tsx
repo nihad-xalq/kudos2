@@ -1,7 +1,7 @@
 "use client"
 
 import { IoClose, IoCheckmarkCircle, IoAlertCircle, IoInformationCircle, IoWarning } from 'react-icons/io5';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export type NotificationType = 'success' | 'error' | 'info' | 'warning';
 
@@ -63,10 +63,10 @@ export default function Notification({
     const config = notificationConfig[type];
     const Icon = config.icon;
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         setIsClosing(true);
         onClose?.();
-    };
+    }, [onClose]);
 
     useEffect(() => {
         if (!isVisible) return;

@@ -3,8 +3,8 @@ import Image from 'next/image';
 interface Member {
   id: number;
   name: string;
-  role: string;
   image: string;
+  description: string;
 }
 
 interface Value {
@@ -22,15 +22,15 @@ interface Stat {
 const members: Member[] = [
   {
     id: 1,
-    name: "John Doe",
-    role: "Founder & CEO",
+    name: "Elgun Abdurrahmanov",
     image: "/images/founders/founder1.jpg",
+    description: "Visionary leader with 15+ years of experience in social innovation and community development.",
   },
   {
     id: 2,
-    name: "Jane Smith",
-    role: "Chief Operations Officer",
+    name: "Tofig Aghayev",
     image: "/images/founders/founder2.jpg",
+    description: "Innovative thinker with a passion for technology and community impact.",
   },
 ];
 
@@ -119,7 +119,7 @@ const About: React.FC = () => {
                   solutions that make a real difference in people&apos;s lives.
                 </p>
               </div>
-              <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-2xl grid grid-cols-3 items-center justify-center gap-4">
+              <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-2xl grid grid-cols-1 sm:grid-cols-3 items-center justify-center gap-4">
                 {stats.map((stat) => (
                   <div key={stat.id} className="text-center">
                     <div className="text-6xl font-bold text-purple-600 mb-2">{stat.value}</div>
@@ -186,10 +186,8 @@ const About: React.FC = () => {
                 </div>
                 <div className="px-6 pb-6">
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
-                  <p className="text-blue-600 font-medium mb-3">{member.role}</p>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    Visionary leader with 15+ years of experience in social innovation
-                    and community development.
+                  <p className="text-gray-600 text-sm leading-tight md:leading-relaxed">
+                    {member.description}
                   </p>
                 </div>
               </div>
