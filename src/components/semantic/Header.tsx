@@ -17,7 +17,7 @@ export default function Header() {
             <Nav />
 
             <Link
-                href="/register"
+                href="/#register_form"
                 type="button"
                 aria-label="Register"
                 className="bg-white hover:bg-emerald-500 hover:scale-105 transition-all duration-300 text-black text-center font-medium px-8 py-3 rounded-full cursor-pointer w-1/2 ml-auto"

@@ -30,7 +30,7 @@ export default function HomeContact() {
     };
 
     return (
-        <div className="flex flex-col items-start justify-center gap-12 pb-16 px-6">
+        <div id="register_form" className="flex flex-col items-start justify-center gap-12 pb-16 px-6">
             <SectionTitle title="Contact US" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">

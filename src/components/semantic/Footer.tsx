@@ -64,7 +64,7 @@ const quickLinks: QuickLink[] = [
     },
     {
         name: "Register Team",
-        url: "/register"
+        url: "/#register_form"
     }
 ]
 
