@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { FaFacebook, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
 import { FaPhone, FaLocationDot, FaEnvelope, FaXTwitter } from "react-icons/fa6";
+import { FaFacebook, FaInstagram, FaYoutube, FaLinkedin } from "react-icons/fa";
+import Link from "next/link";
 
 interface SocialMedia {
     name: string;
@@ -130,28 +130,6 @@ export default function Footer() {
                             ))}
                         </ul>
                     </div>
-
-                    {/* Game Features */}
-                    {/* <div className="space-y-6">
-                        <h4 className="text-2xl font-bold">Game Features</h4>
-                        <ul className="space-y-4">
-                            <li className="text-white text-lg">
-                                • Multiple Categories
-                            </li>
-                            <li className="text-white text-lg">
-                                • Real-time Scoring
-                            </li>
-                            <li className="text-white text-lg">
-                                • Leaderboards
-                            </li>
-                            <li className="text-white text-lg">
-                                • Team Challenges
-                            </li>
-                            <li className="text-white text-lg">
-                                • Achievement System
-                            </li>
-                        </ul>
-                    </div> */}
 
                     {/* Contact Info */}
                     <div className="space-y-4 md:space-y-6">

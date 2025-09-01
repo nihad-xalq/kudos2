@@ -5,14 +5,24 @@ import { InputSelectField } from "@/components/form/inputs/InputSelectField";
 import { InputTextField } from "@/components/form/inputs/InputTextField";
 import { useNotification } from "@/components/reusable/Notification";
 import { CFormProvider } from "@/components/form/CFormProvider";
+import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
 import Notification from "@/components/reusable/Notification";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
 import Link from "next/link";
+import * as yup from "yup";
 
-const contactInfo = [
+interface ContactInfo {
+  id: number;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  link: string;
+  text: string;
+  bgColor: string;
+}
+
+const contactInfo: ContactInfo[] = [
   {
     id: 1,
     title: "Email Us",
