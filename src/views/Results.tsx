@@ -1,3 +1,7 @@
+"use client"
+
+import { motion } from 'framer-motion';
+
 interface Stat {
   id: number;
   title: string;
@@ -112,57 +116,157 @@ const timelineItems: TimelineItem[] = [
   },
 ];
 
-const Results: React.FC = () => {
+export default function Results() {
+  const pageVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
+  const statVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
+  const timelineVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <motion.div
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-white"
+      variants={pageVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {/* Hero Section */}
-      <section className="relative bg-black text-white py-20">
+      <motion.section
+        className="relative bg-black text-white py-20"
+        variants={sectionVariants}
+      >
         <div className="absolute inset-0 bg-black opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            <motion.h1
+              className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
               Our Impact & Results
-            </h1>
-            <p className="text-xl md:text-2xl text-green-100 leading-relaxed">
+            </motion.h1>
+            <motion.p
+              className="text-xl md:text-2xl text-green-100 leading-relaxed"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
               Measurable outcomes that demonstrate our commitment to positive change
-            </p>
+            </motion.p>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Statistics Section */}
-      <section className="py-16 bg-white">
+      <motion.section
+        className="py-16 bg-white"
+        variants={sectionVariants}
+      >
         <div className="mx-auto px-4">
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mx-auto">
             {
               stats.map((stat) => (
-                <li key={stat.id} className="text-center p-4 bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                <motion.li
+                  key={stat.id}
+                  className="text-center p-4 bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300"
+                  variants={statVariants}
+                  whileHover={{
+                    y: -10,
+                    scale: 1.05,
+                    transition: { duration: 0.3 }
+                  }}
+                >
                   <div className={`text-4xl md:text-5xl font-bold ${stat.titleColor} mb-2`}>{stat.value}</div>
                   <div className="text-gray-600 font-medium">{stat.title}</div>
-                </li>
+                </motion.li>
               ))
             }
           </ul>
         </div>
-      </section>
+      </motion.section>
 
       {/* Key Achievements */}
-      <section className="py-16 bg-gray-50">
+      <motion.section
+        className="py-16 bg-gray-50"
+        variants={sectionVariants}
+      >
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            variants={itemVariants}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Key Achievements
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Milestones that showcase our dedication to creating lasting impact
             </p>
-          </div>
+          </motion.div>
           <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto">
             {
-              achievements.map((achievement) => (
-                <li
+              achievements.map((achievement, index) => (
+                <motion.li
                   key={achievement.id}
                   className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                  variants={itemVariants}
+                  whileHover={{
+                    y: -10,
+                    transition: { duration: 0.3 }
+                  }}
                 >
                   <div className="h-48 bg-gradient-to-br from-purple-400 to-pink-500 relative">
                     <div className="absolute inset-0 bg-black opacity-20"></div>
@@ -173,7 +277,12 @@ const Results: React.FC = () => {
                           <span className="text-lg font-bold text-slate-800">{achievement.progress}%</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                          <div className={`${achievement.bgColor} h-2 rounded-full`} style={{ width: `${achievement.progress}%` }}></div>
+                          <motion.div
+                            className={`${achievement.bgColor} h-2 rounded-full`}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${achievement.progress}%` }}
+                            transition={{ duration: 1, delay: 0.5 + index * 0.2 }}
+                          />
                         </div>
                       </div>
                     </div>
@@ -190,38 +299,59 @@ const Results: React.FC = () => {
                       {achievement.progressText}
                     </div>
                   </div>
-                </li>
+                </motion.li>
               ))
             }
           </ul>
         </div>
-      </section>
+      </motion.section>
 
       {/* Timeline Section */}
-      <section className="py-16 bg-white">
+      <motion.section
+        className="py-16 bg-white"
+        variants={sectionVariants}
+      >
         <div className="mx-auto px-4">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            variants={itemVariants}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Our Journey
             </h2>
             <p className="text-xl text-gray-600 mx-auto">
               A timeline of our major milestones and achievements
             </p>
-          </div>
+          </motion.div>
           <div className="mx-auto">
             <div className="relative">
               {/* Timeline Line */}
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+              <motion.div
+                className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"
+                initial={{ height: 0 }}
+                animate={{ height: "100%" }}
+                transition={{ duration: 1, delay: 0.8 }}
+              />
 
               {/* Timeline Items */}
               <ul className="space-y-8">
                 {
-                  timelineItems.map((item) => (
-                    <li
+                  timelineItems.map((item, index) => (
+                    <motion.li
                       key={item.id}
                       className="relative flex items-start w-full"
+                      variants={timelineVariants}
+                      whileHover={{
+                        x: 10,
+                        transition: { duration: 0.3 }
+                      }}
                     >
-                      <div className={`absolute left-6 w-4 h-4 ${item.bgColor} rounded-full border-4 border-white shadow-lg`}></div>
+                      <motion.div
+                        className={`absolute left-6 w-4 h-4 ${item.bgColor} rounded-full border-4 border-white shadow-lg`}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.5, delay: 1 + index * 0.2 }}
+                      />
                       <div className="ml-16">
                         <div className={`bg-green-50 p-6 rounded-lg border-l-4 ${item.bgColor}`}>
                           <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
@@ -231,16 +361,14 @@ const Results: React.FC = () => {
                           <div className="text-sm text-green-600 font-medium">{item.progressText}</div>
                         </div>
                       </div>
-                    </li>
+                    </motion.li>
                   ))
                 }
               </ul>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </motion.section>
+    </motion.div>
   );
 };
-
-export default Results;

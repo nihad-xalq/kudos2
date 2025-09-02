@@ -1,3 +1,6 @@
+"use client"
+
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 interface Member {
@@ -75,36 +78,107 @@ const stats: Stat[] = [
   },
 ];
 
-const About: React.FC = () => {
+export default function About() {
+  const pageVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
+  const statVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <motion.div
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-white"
+      variants={pageVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {/* Hero Section */}
-      <section className="relative bg-black text-white py-20">
+      <motion.section
+        className="relative bg-black text-white py-20"
+        variants={sectionVariants}
+      >
         <div className="absolute inset-0 bg-black opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            <motion.h1
+              className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
               About Our Mission
-            </h1>
-            <p className="text-xl md:text-2xl text-blue-100 leading-relaxed">
+            </motion.h1>
+            <motion.p
+              className="text-xl md:text-2xl text-blue-100 leading-relaxed"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
               Empowering communities through innovation, collaboration, and sustainable impact
-            </p>
+            </motion.p>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Mission Statement */}
-      <section className="py-16 bg-white">
+      <motion.section
+        className="py-16 bg-white"
+        variants={sectionVariants}
+      >
         <div className=" mx-auto px-4">
           <div className="mx-auto">
-            <div className="text-center mb-12">
+            <motion.div
+              className="text-center mb-12"
+              variants={itemVariants}
+            >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Our Story
               </h2>
               <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
-            </div>
+            </motion.div>
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
+              <motion.div variants={itemVariants}>
                 <h3 className="text-2xl font-semibold text-gray-900 mb-4">
                   Building a Better Future
                 </h3>
@@ -118,35 +192,60 @@ const About: React.FC = () => {
                   Today, we continue to push boundaries, foster partnerships, and deliver
                   solutions that make a real difference in people&apos;s lives.
                 </p>
-              </div>
-              <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-2xl grid grid-cols-1 sm:grid-cols-3 items-center justify-center gap-4">
+              </motion.div>
+              <motion.div
+                className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-2xl grid grid-cols-1 sm:grid-cols-3 items-center justify-center gap-4"
+                variants={itemVariants}
+              >
                 {stats.map((stat) => (
-                  <div key={stat.id} className="text-center">
+                  <motion.div
+                    key={stat.id}
+                    className="text-center"
+                    variants={statVariants}
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.2 }
+                    }}
+                  >
                     <div className="text-6xl font-bold text-purple-600 mb-2">{stat.value}</div>
                     <div className="text-gray-600 font-medium">{stat.title}</div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Values Section */}
-      <section className="py-16 bg-gray-50">
+      <motion.section
+        className="py-16 bg-gray-50"
+        variants={sectionVariants}
+      >
         <div className="mx-auto px-4">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            variants={itemVariants}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Our Core Values
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               The principles that guide everything we do
             </p>
-          </div>
+          </motion.div>
           <div className="grid md:grid-cols-4 gap-8 mx-auto">
             {
               values.map((value) => (
-                <div key={value.id} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <motion.div
+                  key={value.id}
+                  className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+                  variants={itemVariants}
+                  whileHover={{
+                    y: -10,
+                    transition: { duration: 0.3 }
+                  }}
+                >
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                     <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -154,27 +253,41 @@ const About: React.FC = () => {
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">{value.title}</h3>
                   <p className="text-gray-600 leading-relaxed">{value.description}</p>
-                </div>
+                </motion.div>
               ))
             }
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Team Section */}
-      <section className="py-16 bg-white">
+      <motion.section
+        className="py-16 bg-white"
+        variants={sectionVariants}
+      >
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            variants={itemVariants}
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Meet Our Team
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               The passionate individuals driving our mission forward
             </p>
-          </div>
+          </motion.div>
           <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
             {members.map((member) => (
-              <div key={member.id} className="text-center group bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+              <motion.div
+                key={member.id}
+                className="text-center group bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+                variants={itemVariants}
+                whileHover={{
+                  y: -10,
+                  transition: { duration: 0.3 }
+                }}
+              >
                 <div className="relative w-full h-80 mb-6">
                   <Image
                     src={member.image}
@@ -190,13 +303,11 @@ const About: React.FC = () => {
                     {member.description}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
-    </div>
+      </motion.section>
+    </motion.div>
   );
-};
-
-export default About;
+}

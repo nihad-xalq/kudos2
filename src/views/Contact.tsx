@@ -9,6 +9,7 @@ import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
 import Notification from "@/components/reusable/Notification";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import * as yup from "yup";
 
@@ -63,7 +64,7 @@ const schema = yup.object().shape({
 
 type FormValues = yup.InferType<typeof schema>;
 
-const Contact: React.FC = () => {
+export default function Contact() {
   const { notification, showNotification, hideNotification } = useNotification();
 
   const methods = useForm<FormValues>({
@@ -91,13 +92,60 @@ const Contact: React.FC = () => {
     }, 3000);
   };
 
-  // const handleSubmitError = (errors: unknown) => {
-  //   console.log('Form validation errors:', errors);
-  //   showNotification('error', 'Error', 'Please fix the form errors');
-  // };
+  const pageVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut" as const
+      }
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <motion.div
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-white"
+      variants={pageVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {/* Notification Component */}
       {notification && (
         <Notification
@@ -110,26 +158,51 @@ const Contact: React.FC = () => {
         />
       )}
       {/* Hero Section */}
-      <section className="relative bg-black text-white py-20">
+      <motion.section
+        className="relative bg-black text-white py-20"
+        variants={sectionVariants}
+      >
         <div className="absolute inset-0 bg-black opacity-20"></div>
         <div className="mx-auto px-4 relative z-10">
           <div className="mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            <motion.h1
+              className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
               Get In Touch
-            </h1>
-            <p className="text-xl md:text-2xl text-blue-100 leading-relaxed">
+            </motion.h1>
+            <motion.p
+              className="text-xl md:text-2xl text-blue-100 leading-relaxed"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
               We&apos;d love to hear from you and answer any questions you may have
-            </p>
+            </motion.p>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Contact Information Cards */}
-      <section className="py-16 bg-white">
+      <motion.section
+        className="py-16 bg-white"
+        variants={sectionVariants}
+      >
         <div className="mx-auto px-4">
           <ul className="grid md:grid-cols-3 gap-8 mx-auto">
             {contactInfo.map((info) => (
-              <li key={info.id} className={`p-8 rounded-xl text-center hover:shadow-lg transition-shadow duration-300 ${info.bgColor}`}>
+              <motion.li
+                key={info.id}
+                className={`p-8 rounded-xl text-center hover:shadow-lg transition-shadow duration-300 ${info.bgColor}`}
+                variants={cardVariants}
+                whileHover={{
+                  y: -10,
+                  scale: 1.05,
+                  transition: { duration: 0.3 }
+                }}
+              >
                 <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   {info.icon}
                 </div>
@@ -143,26 +216,39 @@ const Contact: React.FC = () => {
                 >
                   {info.text}
                 </Link>
-              </li>
+              </motion.li>
             ))}
           </ul>
         </div>
-      </section>
+      </motion.section>
 
       {/* Contact Form Section */}
-      <section className="py-16 bg-gray-50">
+      <motion.section
+        className="py-16 bg-gray-50"
+        variants={sectionVariants}
+      >
         <div className="mx-auto px-4">
           <div className="mx-auto">
-            <div className="text-center mb-12">
+            <motion.div
+              className="text-center mb-12"
+              variants={itemVariants}
+            >
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Send Us a Message
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
                 Fill out the form below and w&apos;ll get back to you as soon as possible
               </p>
-            </div>
+            </motion.div>
 
-            <div className="bg-white rounded-2xl shadow-xl p-4 md:p-12 max-w-4xl mx-auto">
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl p-4 md:p-12 max-w-4xl mx-auto"
+              variants={itemVariants}
+              whileHover={{
+                y: -5,
+                transition: { duration: 0.3 }
+              }}
+            >
               <CFormProvider
                 onSubmit={handleSubmit}
                 methods={methods}
@@ -220,28 +306,47 @@ const Contact: React.FC = () => {
 
                 {/* Submit Button */}
                 <div className="flex justify-center pt-4">
-                  <button
+                  <motion.button
                     type="submit"
                     className="w-full md:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-lg px-8 py-4 rounded-full border-2 border-emerald-600 transition-all duration-300 cursor-pointer transform hover:scale-105 hover:shadow-lg min-w-[200px]"
+                    whileHover={{
+                      scale: 1.05,
+                      y: -2,
+                      transition: { duration: 0.2 }
+                    }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     Send Message
-                  </button>
+                  </motion.button>
                 </div>
               </CFormProvider>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Map Section */}
-      <section className="py-16 bg-white">
+      <motion.section
+        className="py-16 bg-white"
+        variants={sectionVariants}
+      >
         <div className="mx-auto px-4">
-          <div className="text-center mb-8">
+          <motion.div
+            className="text-center mb-8"
+            variants={itemVariants}
+          >
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Find Us</h2>
             <p className="text-gray-600">Visit our office or reach out to schedule a meeting</p>
-          </div>
+          </motion.div>
 
-          <div className="relative w-full pb-[56.25%] md:pb-[40%]">
+          <motion.div
+            className="relative w-full pb-[56.25%] md:pb-[40%]"
+            variants={itemVariants}
+            whileHover={{
+              scale: 1.02,
+              transition: { duration: 0.3 }
+            }}
+          >
             <figure>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d391.22066667136244!2d49.848524354291285!3d40.39199423129661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d00164bf987%3A0xf627c02295b999f6!2sSafrani%20Baku!5e1!3m2!1sen!2saz!4v1756383828704!5m2!1sen!2saz&zoom=10"
@@ -255,11 +360,9 @@ const Contact: React.FC = () => {
               ></iframe>
               <figcaption className="text-center text-gray-600 text-sm mt-2">Safrani Baku - Kudos.az</figcaption>
             </figure>
-          </div>
+          </motion.div>
         </div>
-      </section>
-    </div>
+      </motion.section>
+    </motion.div>
   );
-};
-
-export default Contact;
+}

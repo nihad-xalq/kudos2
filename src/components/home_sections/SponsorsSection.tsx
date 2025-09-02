@@ -1,6 +1,7 @@
 import SectionTitle from "../reusable/SectionTitle";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 interface Sponsor {
@@ -93,10 +94,45 @@ const sponsorItems: Sponsor[] = [
 ]
 
 export default function SponsorsSection() {
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.2
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { y: 30, opacity: 0, scale: 0.8 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            transition: {
+                duration: 0.5,
+                ease: "easeOut" as const
+            }
+        }
+    };
+
     return (
-        <div className="sponsors_section flex flex-col items-center justify-center gap-12 pb-16 px-6">
-            <SectionTitle title="Our Sponsors" />
-            <div className="w-full">
+        <motion.div
+            className="sponsors_section flex flex-col items-center justify-center gap-12 pb-16 px-6"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+        >
+            <motion.div variants={itemVariants}>
+                <SectionTitle title="Our Sponsors" />
+            </motion.div>
+            <motion.div
+                className="w-full"
+                variants={itemVariants}
+            >
                 <Swiper
                     modules={[Autoplay]}
                     spaceBetween={10}
@@ -133,7 +169,13 @@ export default function SponsorsSection() {
                 >
                     {sponsorItems.map((item) => (
                         <SwiperSlide key={item.id}>
-                            <div className="w-24 h-16 flex items-center justify-center">
+                            <motion.div
+                                className="w-24 h-16 flex items-center justify-center"
+                                whileHover={{
+                                    scale: 1.1,
+                                    transition: { duration: 0.2 }
+                                }}
+                            >
                                 <Image
                                     src={item.image}
                                     alt={item.name}
@@ -142,11 +184,11 @@ export default function SponsorsSection() {
                                     sizes="100vw"
                                     className="w-full h-full object-contain"
                                 />
-                            </div>
+                            </motion.div>
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     )
 }

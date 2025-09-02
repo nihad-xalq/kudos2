@@ -1,29 +1,57 @@
+"use client";
 import Nav from "@/components/semantic/Nav";
-import Image from "next/image";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
+import Logo from "../Logo";
 
 export default function Header() {
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            setIsScrolled(scrollTop > 600);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
-        <header className="bg-black grid grid-cols-3 items-center px-4 py-12 w-full">
-            <div className="">
+        <header
+            className={`sticky top-0 z-50 bg-black grid grid-cols-3 items-center px-4 w-full transition-all duration-300 ${isScrolled ? 'py-6' : 'py-12'}`}
+        >
+            <motion.div
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            >
                 <Link
                     href="/"
                     aria-label="Home"
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 w-1/4"
                 >
-                    <Image src="/logo.png" alt="Logo" width={0} height={0} sizes="100vw" className="w-full h-auto" />
+                    <Logo />
                 </Link>
-            </div>
+            </motion.div>
             <Nav />
 
-            <Link
-                href="/#register_form"
-                type="button"
-                aria-label="Register"
-                className="bg-white hover:bg-emerald-500 hover:scale-105 transition-all duration-300 text-black text-center font-medium px-8 py-3 rounded-full cursor-pointer w-1/2 ml-auto"
+            <motion.div
+                initial={{ x: 50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                className="flex items-center justify-center"
             >
-                Register
-            </Link>
+                <Link
+                    href="/#register_form"
+                    type="button"
+                    aria-label="Register"
+                    className="bg-white hover:bg-emerald-500 hover:scale-105 transition-all duration-300 text-black text-center font-medium px-8 py-3 rounded-full cursor-pointer w-1/2 ml-auto"
+                >
+                    Register
+                </Link>
+            </motion.div>
         </header>
     );
 }

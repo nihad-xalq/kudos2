@@ -2,6 +2,7 @@
 
 import { IoClose, IoCheckmarkCircle, IoAlertCircle, IoInformationCircle, IoWarning } from 'react-icons/io5';
 import { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export type NotificationType = 'success' | 'error' | 'info' | 'warning';
 
@@ -97,59 +98,97 @@ export default function Notification({
         };
     }, [isVisible, duration, handleClose]);
 
-
-
     if (!isVisible && !isClosing) return null;
 
     return (
-        <div className={`fixed top-4 right-4 z-50 max-w-sm w-full transition-all duration-300 ease-in-out willFadeIn ${isVisible && !isClosing
-            ? 'translate-x-0 opacity-100'
-            : 'translate-x-full opacity-0'
-            }`}>
-            <div className={`
-                relative overflow-hidden rounded-xl border shadow-lg
-                ${config.bgColor} ${config.borderColor}
-                transform transition-all duration-300 ease-in-out
-                hover:scale-105 hover:shadow-xl
-            `}>
-                {/* Progress bar */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gray-200">
-                    <div
-                        className={`h-full transition-all duration-100 ease-linear ${config.progressColor}`}
-                        style={{ width: `${progress}%` }}
-                    />
-                </div>
-
-                {/* Content */}
-                <div className="p-4">
-                    <div className="flex items-start gap-3">
-                        <div className={`flex-shrink-0 ${config.iconColor}`}>
-                            <Icon className="w-5 h-5" />
+        <AnimatePresence>
+            {isVisible && (
+                <motion.div 
+                    className="fixed top-4 right-4 z-50 max-w-sm w-full"
+                    initial={{ x: 400, opacity: 0, scale: 0.8 }}
+                    animate={{ x: 0, opacity: 1, scale: 1 }}
+                    exit={{ x: 400, opacity: 0, scale: 0.8 }}
+                    transition={{ 
+                        type: "spring", 
+                        stiffness: 300, 
+                        damping: 30,
+                        duration: 0.3
+                    }}
+                >
+                    <motion.div 
+                        className={`
+                            relative overflow-hidden rounded-xl border shadow-lg
+                            ${config.bgColor} ${config.borderColor}
+                            transform transition-all duration-300 ease-in-out
+                            hover:scale-105 hover:shadow-xl
+                        `}
+                        whileHover={{ 
+                            scale: 1.02,
+                            transition: { duration: 0.2 }
+                        }}
+                    >
+                        {/* Progress bar */}
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gray-200">
+                            <motion.div
+                                className={`h-full ${config.progressColor}`}
+                                initial={{ width: "100%" }}
+                                animate={{ width: `${progress}%` }}
+                                transition={{ duration: 0.1, ease: "linear" }}
+                            />
                         </div>
 
-                        <div className="flex-1 min-w-0">
-                            <h4 className={`text-base font-semibold ${config.textColor}`}>
-                                {title}
-                            </h4>
-                            <p className={`text-base mt-1 ${config.textColor} opacity-90`}>
-                                {message}
-                            </p>
-                        </div>
+                        {/* Content */}
+                        <div className="p-4">
+                            <div className="flex items-start gap-3">
+                                <motion.div 
+                                    className={`flex-shrink-0 ${config.iconColor}`}
+                                    initial={{ scale: 0, rotate: -180 }}
+                                    animate={{ scale: 1, rotate: 0 }}
+                                    transition={{ delay: 0.1, duration: 0.3 }}
+                                >
+                                    <Icon className="w-5 h-5" />
+                                </motion.div>
 
-                        <button
-                            onClick={handleClose}
-                            className={`
-                                flex-shrink-0 p-1 rounded-lg transition-colors duration-200
-                                ${config.textColor} opacity-60 hover:opacity-100
-                                hover:bg-black hover:bg-opacity-10
-                            `}
-                        >
-                            <IoClose className="w-4 h-4" />
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                <div className="flex-1 min-w-0">
+                                    <motion.h4 
+                                        className={`text-base font-semibold ${config.textColor}`}
+                                        initial={{ y: 10, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ delay: 0.2, duration: 0.3 }}
+                                    >
+                                        {title}
+                                    </motion.h4>
+                                    <motion.p 
+                                        className={`text-base mt-1 ${config.textColor} opacity-90`}
+                                        initial={{ y: 10, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ delay: 0.3, duration: 0.3 }}
+                                    >
+                                        {message}
+                                    </motion.p>
+                                </div>
+
+                                <motion.button
+                                    onClick={handleClose}
+                                    className={`
+                                        flex-shrink-0 p-1 rounded-lg transition-colors duration-200
+                                        ${config.textColor} opacity-60 hover:opacity-100
+                                        hover:bg-black hover:bg-opacity-10
+                                    `}
+                                    whileHover={{ 
+                                        scale: 1.1,
+                                        transition: { duration: 0.2 }
+                                    }}
+                                    whileTap={{ scale: 0.9 }}
+                                >
+                                    <IoClose className="w-4 h-4" />
+                                </motion.button>
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 }
 
