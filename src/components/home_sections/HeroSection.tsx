@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function HeroSection() {
     const containerVariants = {
@@ -6,14 +7,32 @@ export default function HeroSection() {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.3,
-                delayChildren: 0.2
+                staggerChildren: 0.2,
+                delayChildren: 0.1
             }
         }
     };
 
-    const itemVariants = {
-        hidden: { y: 50, opacity: 0 },
+    const starVariants = {
+        hidden: {
+            scale: 0,
+            opacity: 0,
+            rotate: -30
+        },
+        visible: {
+            scale: 1,
+            opacity: 1,
+            rotate: 30,
+            transition: {
+                duration: 0.8,
+                ease: "easeOut" as const,
+                delay: 0.2
+            }
+        }
+    };
+
+    const textVariants = {
+        hidden: { y: 60, opacity: 0 },
         visible: {
             y: 0,
             opacity: 1,
@@ -26,20 +45,56 @@ export default function HeroSection() {
 
     const quizVariants = {
         hidden: {
-            y: 100,
+            y: 120,
             opacity: 0,
-            rotate: 0,
-            scale: 0.8
+            rotate: -10,
+            scale: 0.7
         },
         visible: {
             y: 0,
             opacity: 1,
-            rotate: 6,
+            rotate: 2,
             scale: 1,
             transition: {
-                duration: 1,
+                duration: 1.2,
                 ease: "easeOut" as const,
-                delay: 0.6
+                delay: 0.8
+            }
+        }
+    };
+
+    const arrowVariants = {
+        hidden: {
+            scale: 0,
+            opacity: 0,
+            rotate: -200
+        },
+        visible: {
+            scale: 1,
+            opacity: 1,
+            rotate: -100,
+            transition: {
+                duration: 0.9,
+                ease: "easeOut" as const,
+                delay: 1.0
+            }
+        }
+    };
+
+    const questionVariants = {
+        hidden: {
+            scale: 0,
+            opacity: 0,
+            rotate: -30
+        },
+        visible: {
+            scale: 1,
+            opacity: 1,
+            rotate: 30,
+            transition: {
+                duration: 0.9,
+                ease: "easeOut" as const,
+                delay: 1.2
             }
         }
     };
@@ -52,32 +107,75 @@ export default function HeroSection() {
             animate="visible"
         >
             <motion.h1
-                className="font-bold flex flex-col items-center justify-center gap-0 md:gap-0 uppercase"
-                variants={itemVariants}
+                className="font-bold flex flex-col items-center justify-center gap-0 md:gap-0 uppercase relative"
+                variants={containerVariants}
             >
+                <motion.div
+                    variants={starVariants}
+                    className="absolute -left-[40px] -top-12"
+                >
+                    <Image
+                        src="/images/illustrations/heroSection/star.png"
+                        alt="Star"
+                        width={100}
+                        height={100}
+                        className="w-16 h-16"
+                    />
+                </motion.div>
+
                 <motion.span
                     className="text-4xl md:text-8xl text-white"
-                    variants={itemVariants}
+                    variants={textVariants}
                 >
                     Entertaining
                 </motion.span>
+
                 <motion.span
                     className="text-4xl md:text-8xl text-white"
-                    variants={itemVariants}
+                    variants={textVariants}
                 >
                     Intellectual
                 </motion.span>
-                <motion.span
-                    className="text-5xl md:text-9xl bg-black shadow-[2px_2px_1px_4px_rgb(0,255,163)] rounded-3xl p-2 text-white rotate-6 translate-y-1 md:-translate-y-1"
-                    variants={quizVariants}
-                    whileHover={{
-                        scale: 1.1,
-                        rotate: 12,
-                        transition: { duration: 0.3 }
-                    }}
-                >
-                    Quiz
-                </motion.span>
+
+                <div className="flex items-center justify-center relative">
+                    <motion.span
+                        className="text-5xl md:text-9xl bg-black shadow-[2px_2px_1px_4px_rgb(0,255,163)] rounded-3xl p-2 text-white rotate-2 translate-y-1 md:-translate-y-0.5"
+                        variants={quizVariants}
+                        whileHover={{
+                            scale: 1.1,
+                            rotate: 12,
+                            transition: { duration: 0.3 }
+                        }}
+                    >
+                        Quiz
+                    </motion.span>
+
+                    <motion.div
+                        variants={arrowVariants}
+                        className="absolute -left-[170px] -top-6"
+                    >
+                        <Image
+                            src="/images/illustrations/heroSection/arrow.png"
+                            alt="Arrow"
+                            width={100}
+                            height={100}
+                            className="w-36 h-36"
+                        />
+                    </motion.div>
+
+                    <motion.div
+                        variants={questionVariants}
+                        className="absolute -right-[200px] top-5"
+                    >
+                        <Image
+                            src="/images/illustrations/heroSection/question.png"
+                            alt="Question"
+                            width={100}
+                            height={100}
+                            className="w-36 h-36"
+                        />
+                    </motion.div>
+                </div>
             </motion.h1>
         </motion.div>
     )
