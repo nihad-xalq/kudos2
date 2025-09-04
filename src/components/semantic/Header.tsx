@@ -30,7 +30,7 @@ export default function Header() {
                 <Link
                     href="/"
                     aria-label="Home"
-                    className="flex items-center gap-2 w-1/4"
+                    className={`flex items-center gap-2 ${isScrolled ? "w-1/6" : "w-1/4"}`}
                 >
                     <Logo />
                 </Link>
@@ -47,11 +47,14 @@ export default function Header() {
                     href="/#register_form"
                     type="button"
                     aria-label="Register"
-                    className="bg-white hover:bg-emerald-500 hover:scale-105 transition-all duration-300 text-black text-center font-medium px-8 py-3 rounded-full cursor-pointer w-1/2 ml-auto"
+                    className={`${isScrolled ?
+                        "hover:scale-105 transition-all duration-300 text-white text-center font-medium cursor-pointer w-1/2 ml-auto hover:text-green-500"
+                        : "bg-white hover:bg-emerald-500 hover:scale-105 transition-all duration-300 text-black text-center font-medium cursor-pointer w-1/2 ml-auto px-8 py-3 rounded-full"
+                        }`}
                 >
                     Register
                 </Link>
             </motion.div>
-        </header>
+        </header >
     );
 }
