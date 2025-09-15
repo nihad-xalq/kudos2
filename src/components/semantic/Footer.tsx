@@ -166,7 +166,7 @@ export default function Footer() {
 
                     {/* Quick Links */}
                     <motion.div className="space-y-4 md:space-y-6" variants={itemVariants}>
-                        <h4 className="text-2xl font-bold">Quick Links</h4>
+                        <h2 className="text-2xl font-bold">Quick Links</h2>
                         <ul className="space-y-2 md:space-y-4">
                             {quickLinks.map((item) => (
                                 <motion.li
@@ -183,7 +183,7 @@ export default function Footer() {
 
                     {/* Contact Info */}
                     <motion.div className="space-y-4 md:space-y-6" variants={itemVariants}>
-                        <h4 className="text-2xl font-bold">Get In Touch</h4>
+                        <h2 className="text-2xl font-bold">Get In Touch</h2>
                         <div className="space-y-2 md:space-y-4">
                             {contactInfo.map((item) => (
                                 <motion.div
@@ -199,7 +199,7 @@ export default function Footer() {
 
                         {/* Social Media */}
                         <div className="pt-2 md:pt-4">
-                            <h5 className="text-lg font-semibold mb-3">Follow Us</h5>
+                            <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
                             <div className="grid grid-cols-5 gap-2 md:gap-4 w-max">
                                 {socialMedia.map((item) => (
                                     <motion.div
