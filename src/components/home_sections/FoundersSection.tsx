@@ -65,7 +65,7 @@ export default function FoundersSection() {
                     {founderItems.map((item) => (
                         <motion.div 
                             key={item.id} 
-                            className="bg-emerald-400 rounded-3xl overflow-hidden p-4"
+                            className="bg-emerald-400 rounded-3xl overflow-hidden p-4 w-full"
                             variants={itemVariants}
                             whileHover={{ 
                                 scale: 1.05, 
@@ -82,7 +82,7 @@ export default function FoundersSection() {
                                 sizes="100vw"
                                 className="w-full h-full object-cover rounded-lg"
                             />
-                            <div className="w-full h-full flex flex-col items-center justify-center text-black">
+                            <div className="w-full h-full hidden md:flex flex-col items-center justify-center text-black">
                                 <h3 className="text-3xl font-bold uppercase mt-3 text-center flex flex-col items-center justify-center">
                                     <span>{item.name}</span> <span>{item.surname}</span>
                                 </h3>

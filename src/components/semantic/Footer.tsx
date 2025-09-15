@@ -241,7 +241,7 @@ export default function Footer() {
                                 © 2025 Kudos.az - All rights reserved
                             </p>
                         </div>
-                        <div className="flex gap-6 text-white">
+                        <div className="flex justify-center md:justify-start flex-wrap space-x-6 space-y-3 md:space-y-0 text-white">
                             <motion.a
                                 href="#"
                                 className="hover:text-white transition-colors duration-300"

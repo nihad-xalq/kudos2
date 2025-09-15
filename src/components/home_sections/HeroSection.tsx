@@ -101,7 +101,7 @@ export default function HeroSection() {
 
     return (
         <motion.div
-            className="hero_section flex flex-col items-center justify-center bg-black py-10 md:py-28 rounded-b-4xl"
+            className="hero_section h-[40vh] flex flex-col items-center justify-center bg-black py-10 md:py-28 rounded-b-4xl"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -112,26 +112,26 @@ export default function HeroSection() {
             >
                 <motion.div
                     variants={starVariants}
-                    className="absolute -left-[40px] -top-12"
+                    className="absolute -left-[20px] md:-left-[40px] -top-7 md:-top-12"
                 >
                     <Image
                         src="/images/illustrations/heroSection/star.png"
                         alt="Star"
                         width={100}
                         height={100}
-                        className="w-16 h-16"
+                        className="w-8 h-8 md:w-16 md:h-16"
                     />
                 </motion.div>
 
                 <motion.span
-                    className="text-4xl md:text-8xl text-white"
+                    className="text-5xl md:text-8xl text-white"
                     variants={textVariants}
                 >
                     Entertaining
                 </motion.span>
 
                 <motion.span
-                    className="text-4xl md:text-8xl text-white"
+                    className="text-5xl md:text-8xl text-white"
                     variants={textVariants}
                 >
                     Intellectual
@@ -139,7 +139,7 @@ export default function HeroSection() {
 
                 <div className="flex items-center justify-center relative">
                     <motion.span
-                        className="text-5xl md:text-9xl bg-black shadow-[2px_2px_1px_4px_rgb(0,255,163)] rounded-3xl p-2 text-white rotate-2 translate-y-1 md:-translate-y-0.5"
+                        className="text-6xl md:text-9xl bg-black shadow-[2px_2px_1px_4px_rgb(0,255,163)] rounded-3xl p-2 text-white rotate-2 translate-y-1 md:-translate-y-0.5"
                         variants={quizVariants}
                         whileHover={{
                             scale: 1.1,
@@ -152,27 +152,27 @@ export default function HeroSection() {
 
                     <motion.div
                         variants={arrowVariants}
-                        className="absolute -left-[170px] -top-6"
+                        className="absolute -left-[60px] md:-left-[170px] -top-4 md:-top-6"
                     >
                         <Image
                             src="/images/illustrations/heroSection/arrow.png"
                             alt="Arrow"
                             width={100}
                             height={100}
-                            className="w-36 h-36"
+                            className="w-12 h-12 md:w-36 md:h-36"
                         />
                     </motion.div>
 
                     <motion.div
                         variants={questionVariants}
-                        className="absolute -right-[200px] top-5"
+                        className="absolute -right-[100px] md:-right-[200px] top-5"
                     >
                         <Image
                             src="/images/illustrations/heroSection/question.png"
                             alt="Question"
                             width={100}
                             height={100}
-                            className="w-36 h-36"
+                            className="w-12 h-12 md:w-36 md:h-36"
                         />
                     </motion.div>
                 </div>

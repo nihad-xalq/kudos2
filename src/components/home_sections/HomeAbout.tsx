@@ -71,7 +71,7 @@ export default function HomeAbout() {
                     Whether solo or in a team, it encourages learning, critical thinking, and friendly competition.
                 </motion.p>
             </div>
-            <ul className="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-4 w-full mt-28">
+            <ul className="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-4 w-full mt-12 md:mt-28">
                 {aboutItems.map((item) => (
                     <motion.li 
                         key={item.id} 
