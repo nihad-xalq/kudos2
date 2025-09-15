@@ -101,7 +101,7 @@ export default function HeroSection() {
 
     return (
         <motion.div
-            className="hero_section h-[40vh] flex flex-col items-center justify-center bg-black py-10 md:py-28 rounded-b-4xl"
+            className="hero_section h-[40vh] md:h-auto flex flex-col items-center justify-center bg-black py-10 md:py-28 rounded-b-4xl"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
